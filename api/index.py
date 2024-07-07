@@ -313,5 +313,3 @@ def mpconvert():
         else:
             flash('Your Link/Search is invalid or over 10 minutes! Please try again!')
             return render_template('index.html')
-
-app.run("0.0.0.0", debug=True)
