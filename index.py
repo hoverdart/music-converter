@@ -313,6 +313,3 @@ def mpconvert():
         else:
             flash('Your Link/Search is invalid or over 10 minutes! Please try again!')
             return render_template('index.html')
-
-if __name__ == '__main__':
-    app.run(port=234)
