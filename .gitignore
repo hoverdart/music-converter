@@ -1,13 +1,12 @@
 .vercel
+.next
+out
+node_modules
+coverage
+playwright-report
+test-results
+public/ffmpeg
+*.tsbuildinfo
 *.log
-*.pyc
-__pycache__
-
-# Environments 
-.env 
-.venv 
-env/ 
-venv/ 
-ENV/ 
-env.bak/ 
-venv.bak/ 
+.env*
+!.env.example

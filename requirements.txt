@@ -1,4 +1,0 @@
-Flask==3.0.3
-yt-dlp
-youtube-search
-gunicorn
