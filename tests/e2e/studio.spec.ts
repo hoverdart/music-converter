@@ -46,6 +46,23 @@ test("presents a private, tool-first responsive workspace", async ({ page }) => 
   await expect(page.getByRole("heading", { name: "Local queue" })).toBeVisible();
 });
 
+test("animates the studio and crossfades between primary pages", async ({ page }) => {
+  await page.goto("/");
+  await expect.poll(() => page.locator(".dropzone").evaluate((element) => getComputedStyle(element).animationName)).toContain("rise-in");
+
+  await page.getByRole("banner").getByRole("link", { name: "About", exact: true }).click();
+  await expect(page).toHaveURL(/\/about\/?$/);
+  await expect(page.getByRole("heading", { name: "The bot grew up." })).toBeVisible();
+
+  await page.getByRole("banner").getByRole("link", { name: "Home", exact: true }).click();
+  await expect(page).toHaveURL(/\/$/);
+  await expect(page.getByRole("heading", { name: /Your audio/ })).toBeVisible();
+
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  const reducedDuration = await page.locator(".dropzone").evaluate((element) => parseFloat(getComputedStyle(element).animationDuration));
+  expect(reducedDuration).toBeLessThanOrEqual(0.001);
+});
+
 test("accepts a local file and exposes practical audio adjustments", async ({ page }) => {
   await page.goto("/");
   await page.locator('input[type="file"][accept*="audio"]')
@@ -121,6 +138,9 @@ test("tells the MusicMixer story and links to Shaurya's website", async ({ page 
   await expect(page.getByRole("banner").getByRole("link", { name: /Created by Shaurya/ })).toBeVisible();
   await expect(page.getByRole("heading", { name: "The bot grew up." })).toBeVisible();
   await expect(page.getByRole("heading", { name: "It started with a taco." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "YouTube kept moving the goalposts." })).toBeVisible();
+  await expect(page.getByText(/The bot was free\. Keeping a computer awake for it was not\./)).toBeVisible();
+  await expect(page.getByText(/Early Verified Bot Developer/)).toBeVisible();
   await expect(page.getByAltText("The original MusicMixer Discord bot artwork from 2020")).toBeVisible();
   await expect(page.getByAltText("Preview of Shaurya Verma's personal website")).toBeVisible();
   await expect(page.getByText(/push the bass all the way to/)).toBeVisible();

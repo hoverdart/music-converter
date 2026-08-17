@@ -115,15 +115,24 @@ export function Studio() {
   const [storage, setStorage] = useState<StorageState>({ usage: 0, quota: 0, persistent: false });
   const [engineVariant, setEngineVariant] = useState<"idle" | "loading" | "mt" | "st" | "error">("idle");
   const [queueTick, setQueueTick] = useState(0);
-  const [toast, setToast] = useState("");
+  const [toast, setToast] = useState<{ message: string; leaving: boolean } | null>(null);
+  const toastTimersRef = useRef<number[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const processingRef = useRef(false);
   const cancelledJobRef = useRef<string | null>(null);
   const engineRef = useRef<EngineClient | null>(null);
 
   const notify = useCallback((message: string) => {
-    setToast(message);
-    window.setTimeout(() => setToast((current) => current === message ? "" : current), 4200);
+    toastTimersRef.current.forEach(window.clearTimeout);
+    setToast({ message, leaving: false });
+    toastTimersRef.current = [
+      window.setTimeout(() => setToast((current) => current?.message === message ? { ...current, leaving: true } : current), 3900),
+      window.setTimeout(() => setToast((current) => current?.message === message ? null : current), 4200)
+    ];
+  }, []);
+
+  useEffect(() => () => {
+    toastTimersRef.current.forEach(window.clearTimeout);
   }, []);
 
   const refreshStorage = useCallback(async () => {
@@ -456,7 +465,7 @@ export function Studio() {
         </section>
 
       </main>
-      {toast && <div className="toast" role="status">{toast}</div>}
+      {toast && <div className={`toast ${toast.leaving ? "leaving" : ""}`} role="status">{toast.message}</div>}
     </>
   );
 }

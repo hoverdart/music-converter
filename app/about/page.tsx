@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { SiteHeader } from "@/components/site-header";
+import { PageTransition } from "@/components/page-transition";
 
 export const metadata: Metadata = {
   title: "About",
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <>
+    <PageTransition>
       <SiteHeader page="about" />
       <main className="about-page" id="workspace">
 
@@ -69,7 +70,19 @@ export default function AboutPage() {
         </section>
 
         <section className="about-chapter">
-          <p className="chapter-kicker">04 · This version</p>
+          <p className="chapter-kicker">04 · Why it stopped</p>
+          <div className="chapter-copy">
+            <h2>YouTube kept moving the goalposts.</h2>
+            <p>One of the main reasons I stopped working on MusicMixer was the downloader. I started with youtube-dl, which was already finicky: it ran into hosting problems, the API was annoying to work around, and its own documentation made it sound like parts of what I depended on would be deprecated soon. Eventually, keeping it alive felt less like maintaining a feature and more like negotiating with it.</p>
+            <p>So I switched to yt-dlp. It was newer, more actively maintained, and—at least in theory—the answer. In practice, I still had the same problem: sometimes it simply would not download. A link would work one day, fail the next, and leave me trying to figure out whether I had broken something or YouTube had changed something again.</p>
+            <blockquote className="about-quote">The bot was free. Keeping a computer awake for it was not.</blockquote>
+            <p>Hosting was the final nail in the coffin. MusicMixer did not just need somewhere to serve code. It needed an always-on computer with FFmpeg, a downloader, enough storage, and constant access to a real file directory. Every request wrote media in and out of that directory. For a broke middle and high schooler, finding a machine that was cheap, reliable, and safe was difficult enough. My implementation also did far too much direct file rewriting, which meant a bad filename, a failed cleanup, or one careless path could become a much bigger problem than a broken Discord command.</p>
+            <p>Then high school picked up, and MusicMixer was quietly left behind. Taco Bot lasted longer, but hosting kept getting more expensive there too. When Heroku removed its free tier, I eventually had to shut Taco Bot down as well. Neither project ended with a dramatic final message. They just became harder to keep online than a teenager with homework could reasonably justify.</p>
+          </div>
+        </section>
+
+        <section className="about-chapter">
+          <p className="chapter-kicker">05 · This version</p>
           <div className="chapter-copy">
             <h2>The useful part, rebuilt properly.</h2>
             <p>Today’s MusicMixer keeps the old promise without keeping the old architecture. Files stay on your device. FFmpeg runs locally in a worker. You can convert, trim, split, merge, change pitch or speed, clean up a voice recording, normalize loudness, add fades, and—because some ideas deserve to survive—push the bass all the way to “Oh my god.”</p>
@@ -79,9 +92,12 @@ export default function AboutPage() {
         </section>
 
         <section className="about-chapter">
-          <p className="chapter-kicker">05 · Looking back</p>
+          <p className="chapter-kicker">06 · Looking back</p>
           <div className="chapter-copy">
             <h2>Some projects are worth keeping.</h2>
+            <p>Taco Bot and MusicMixer are important relics of my past. They taught me Python, APIs, asynchronous code, deployment, FFmpeg, and more about Discord bot programming than I could have learned from any tutorial. More importantly, they taught me what happens when software leaves your laptop and becomes something other people rely on.</p>
+            <p>They even earned me Discord&apos;s “Early Verified Bot Developer” badge, which a surprising number of people have since tried to buy from me. That is a very strange legacy for two bots made by a kid, but I suppose it proves that the internet remembers the weirdest parts of your résumé.</p>
+            <p>They also gave me my first taste of the impact customer-facing technology can have. The “customers” were Discord users trying to play the bass-boosted Gummy Bear song or answer as many taco trivia questions as humanly possible, but the lesson was real: people notice when something works, care when it breaks, and will happily tell you what it should do next.</p>
             <p>MusicMixer is not the most important thing I have ever built. It may, however, be one of the clearest records of how I learned to build: start with a joke, add far too many features, break several things, learn why they broke, and eventually come back with better tools.</p>
             <p>Taco Bot gave me the spark. MusicMixer gave that spark a waveform and an unreasonable amount of bass.</p>
             <p><strong>I would absolutely build it again.</strong> Apparently, I just did.</p>
@@ -98,6 +114,6 @@ export default function AboutPage() {
         <Image src="/shaurya-website.png" width={1200} height={630} alt="Preview of Shaurya Verma's personal website" />
         </a>
       </main>
-    </>
+    </PageTransition>
   );
 }

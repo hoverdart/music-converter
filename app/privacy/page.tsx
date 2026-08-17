@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { PageTransition } from "@/components/page-transition";
 
 export const metadata: Metadata = {
   title: "Privacy & licenses",
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <main className="legal-page" id="workspace">
+    <PageTransition><main className="legal-page" id="workspace">
       <Link className="back-link" href="/">← Back to the studio</Link>
       <p className="eyebrow">Plain-language policy</p>
       <h1>Your media stays yours.</h1>
@@ -35,6 +36,6 @@ export default function PrivacyPage() {
         <h2>URL downloads</h2>
         <p>The hosted browser application does not download media from YouTube or other platforms. A future desktop edition may offer local yt-dlp imports only for material the user owns or is authorized to download, subject to each service’s terms.</p>
       </section>
-    </main>
+    </main></PageTransition>
   );
 }

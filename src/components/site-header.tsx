@@ -17,7 +17,7 @@ export function SiteHeader({ page }: { page: "studio" | "about" }) {
           <span>{onAboutPage ? "Home" : "About"}</span>
         </Link>
         <a className="creator-pill" href="https://www.shauryav.com" target="_blank" rel="noreferrer" aria-label="Created by Shaurya — visit shauryav.com">
-          <Image src="/shaurya-penguin.jpg" width={32} height={32} alt="Shaurya's penguin icon" />
+          <Image src="/shaurya-penguin.jpg" width={32} height={32} loading="eager" alt="Shaurya's penguin icon" />
           <span><small>Created by</small><strong>Shaurya</strong></span>
           <Icon name="external" />
         </a>
