@@ -1,5 +1,10 @@
 import { expect, test } from "@playwright/test";
 
+const canonicalOrigin = new URL(
+  process.env.NEXT_PUBLIC_SITE_URL
+    || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "https://musicmixer-syntaxx.vercel.app")
+).origin;
+
 function waveFixture(seconds = 1): Buffer {
   const sampleRate = 8000;
   const sampleCount = sampleRate * seconds;
@@ -44,6 +49,35 @@ test("presents a private, tool-first responsive workspace", async ({ page }) => 
   await expect(page.getByLabel("Method")).toBeVisible();
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(page.getByRole("heading", { name: "Local queue" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /free online audio converter/i })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Audio converter FAQ" })).toBeVisible();
+});
+
+test("publishes unique, indexable metadata for every public page", async ({ page, request }) => {
+  const pages = [
+    { path: "/", title: "Free Online Audio Converter & Editor | MusicMixer", canonical: canonicalOrigin },
+    { path: "/about", title: "About | MusicMixer", canonical: `${canonicalOrigin}/about` },
+    { path: "/privacy", title: "Privacy & licenses | MusicMixer", canonical: `${canonicalOrigin}/privacy` }
+  ];
+
+  for (const entry of pages) {
+    await page.goto(entry.path);
+    await expect(page).toHaveTitle(entry.title);
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", entry.canonical);
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /.{80,180}/);
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /index, follow/);
+    await expect(page.locator('meta[property="og:url"]')).toHaveAttribute("content", entry.canonical);
+    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute("content", /^https:\/\//);
+    await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute("content", "summary_large_image");
+    await expect(page.locator('script[type="application/ld+json"]')).not.toHaveCount(0);
+  }
+
+  const robots = await (await request.get("/robots.txt")).text();
+  expect(robots).toContain("User-Agent: *\nAllow: /");
+  expect(robots).toContain(`Sitemap: ${canonicalOrigin}/sitemap.xml`);
+
+  const sitemap = await (await request.get("/sitemap.xml")).text();
+  for (const entry of pages) expect(sitemap).toContain(`<loc>${entry.path === "/" ? `${entry.canonical}/` : entry.canonical}</loc>`);
 });
 
 test("animates the studio and crossfades between primary pages", async ({ page }) => {

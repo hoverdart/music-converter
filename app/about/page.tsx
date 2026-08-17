@@ -2,15 +2,34 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { SiteHeader } from "@/components/site-header";
 import { PageTransition } from "@/components/page-transition";
+import { StructuredData } from "@/components/structured-data";
+import { absoluteUrl, pageMetadata } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "About",
-  description: "The story of MusicMixer, from a 2020 Discord music bot to a private browser audio studio."
-};
+  description: "The story of MusicMixer, from a 2020 Discord music bot to a private browser audio studio powered by FFmpeg and WebAssembly.",
+  path: "/about"
+});
 
 export default function AboutPage() {
   return (
     <PageTransition>
+      <StructuredData data={{
+        "@context": "https://schema.org",
+        "@type": "AboutPage",
+        "@id": `${absoluteUrl("/about")}#about`,
+        url: absoluteUrl("/about"),
+        name: "About MusicMixer",
+        description: metadata.description,
+        isPartOf: { "@id": `${absoluteUrl("/")}#website` },
+        breadcrumb: {
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Studio", item: absoluteUrl("/") },
+            { "@type": "ListItem", position: 2, name: "About", item: absoluteUrl("/about") }
+          ]
+        }
+      }} />
       <SiteHeader page="about" />
       <main className="about-page" id="workspace">
 

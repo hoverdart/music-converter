@@ -352,10 +352,11 @@ export function Studio() {
       <main className="studio" id="workspace">
         <section className="hero">
           <div>
+            <p className="eyebrow">Free private audio converter</p>
             <h1>Your audio.<br /><em>Your device.</em></h1>
           </div>
           <div className="hero-copy">
-            <p>Build a workflow, process every file locally, and leave with exactly the format you need.</p>
+            <p>Convert, trim, split, merge, and enhance audio locally, then leave with exactly the format you need.</p>
             <div className="privacy-row"><span><Icon name="lock" /> No uploads</span><span><Icon name="wifi" /> Works offline</span><span><Icon name="wave" /> Powered by FFmpeg</span></div>
           </div>
         </section>
@@ -461,6 +462,47 @@ export function Studio() {
                 : <div className="empty-state"><div><Icon name="clock" /><p>Queued jobs run one at a time and remain recoverable on this device.</p></div></div>}
               <div className="storage-card"><div className="storage-row"><span>Browser storage</span><span>{formatBytes(storage.usage)} of {storage.quota ? formatBytes(storage.quota) : "unknown"}</span></div><div className="storage-bar"><span style={{ width: `${storagePercent}%` }} /></div><div className="storage-actions"><button className="ghost-button" type="button" onClick={() => void refreshStorage()}><Icon name="refresh" /> Refresh</button><button className="ghost-button danger" type="button" onClick={() => void clearMedia()}><Icon name="trash" /> Clear all media</button></div></div>
             </div>
+          </div>
+        </section>
+
+        <section className="seo-content" aria-labelledby="private-audio-tools">
+          <div className="seo-intro">
+            <p className="eyebrow">Private by design</p>
+            <h2 id="private-audio-tools">A free online audio converter that never uploads your files.</h2>
+            <p>MusicMixer runs FFmpeg directly in your browser. Convert MP3, WAV, FLAC, AAC, OGG, Opus, and M4A audio; extract audio from WebM or MP4 video; or combine conversion with trimming, splitting, merging, loudness normalization, fades, pitch, speed, bass, and voice cleanup.</p>
+          </div>
+          <div className="seo-points">
+            <article>
+              <h3>Convert and batch-process</h3>
+              <p>Choose an output format and process multiple files with the same private workflow. Completed files download directly from your device.</p>
+            </article>
+            <article>
+              <h3>Edit without an account</h3>
+              <p>Trim clips, split at markers, merge tracks in order, normalize volume, clean up speech, and tune quality without signing in.</p>
+            </article>
+            <article>
+              <h3>Keep media on your device</h3>
+              <p>Inputs, outputs, and recoverable jobs stay in browser-managed storage. MusicMixer has no media upload endpoint or analytics.</p>
+            </article>
+          </div>
+          <div className="seo-faq">
+            <h2>Audio converter FAQ</h2>
+            <details>
+              <summary>Which audio formats can MusicMixer convert?</summary>
+              <p>MusicMixer can create MP3, WAV, FLAC, AAC, OGG, Opus, M4A, WebM, and MP4 files. It can also extract audio from supported audio and video inputs.</p>
+            </details>
+            <details>
+              <summary>Are my audio files uploaded?</summary>
+              <p>No. The hosted app processes selected files locally with WebAssembly and stores working media in browser-managed storage on your device.</p>
+            </details>
+            <details>
+              <summary>Can I use the audio converter offline?</summary>
+              <p>Yes, after the site and audio engine have been cached. Keep the tab open while a job runs because browsers can suspend work when the app closes.</p>
+            </details>
+            <details>
+              <summary>Is MusicMixer free?</summary>
+              <p>Yes. MusicMixer is free to use, requires no account, and is open source.</p>
+            </details>
           </div>
         </section>
 

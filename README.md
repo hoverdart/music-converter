@@ -44,7 +44,11 @@ The browser processing test uses a generated one-second WAV fixture. It does not
 
 ## Deployment
 
-The application exports static files to `out/`. Set `NEXT_PUBLIC_SITE_URL` to the canonical production origin before building. Vercel reads the security headers and legacy route redirects from `vercel.json`.
+The application exports static files to `out/`. Its canonical origin defaults to `https://musicmixer-syntaxx.vercel.app`, uses Vercel's `VERCEL_PROJECT_PRODUCTION_URL` automatically when available, and can be overridden with `NEXT_PUBLIC_SITE_URL`. Vercel reads the security headers and legacy route redirects from `vercel.json`.
+
+`npm run check:seo` verifies the built titles, descriptions, canonicals, social metadata, structured data, sitemap, robots policy, and 404 indexing policy. Run it after `npm run build` (or use `npm run check`, which includes both).
+
+For Google to crawl the deployment, its production domain must be public. In Vercel, use **Settings → Deployment Protection** and ensure the production domain is excluded from authentication. A production request must return the app (not an SSO redirect) and must not include `X-Robots-Tag: noindex`. After deployment, submit `/sitemap.xml` in Google Search Console; source metadata can make pages eligible for indexing, but it cannot force Google to index or rank them.
 
 ## Local-data behavior
 

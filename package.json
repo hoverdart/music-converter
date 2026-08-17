@@ -9,13 +9,14 @@
     "dev": "next dev",
     "prebuild": "npm run prepare:ffmpeg",
     "build": "next build",
+    "check:seo": "node scripts/check-seo.mjs",
     "start": "npx serve out",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "check": "npm run typecheck && npm run lint && npm test && npm run build"
+    "check": "npm run typecheck && npm run lint && npm test && npm run build && npm run check:seo"
   },
   "dependencies": {
     "@ffmpeg/core": "0.12.10",

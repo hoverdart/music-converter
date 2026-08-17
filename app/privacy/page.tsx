@@ -1,15 +1,35 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageTransition } from "@/components/page-transition";
+import { StructuredData } from "@/components/structured-data";
+import { absoluteUrl, pageMetadata } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Privacy & licenses",
-  description: "How MusicMixer keeps media on your device and the open-source software that powers it."
-};
+  description: "Learn how MusicMixer keeps audio and video files on your device, stores jobs locally, and uses open-source browser audio technology.",
+  path: "/privacy"
+});
 
 export default function PrivacyPage() {
   return (
-    <PageTransition><main className="legal-page" id="workspace">
+    <PageTransition>
+      <StructuredData data={{
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "@id": `${absoluteUrl("/privacy")}#webpage`,
+        url: absoluteUrl("/privacy"),
+        name: "MusicMixer privacy and licenses",
+        description: metadata.description,
+        isPartOf: { "@id": `${absoluteUrl("/")}#website` },
+        breadcrumb: {
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Studio", item: absoluteUrl("/") },
+            { "@type": "ListItem", position: 2, name: "Privacy & licenses", item: absoluteUrl("/privacy") }
+          ]
+        }
+      }} />
+      <main className="legal-page" id="workspace">
       <Link className="back-link" href="/">← Back to the studio</Link>
       <p className="eyebrow">Plain-language policy</p>
       <h1>Your media stays yours.</h1>
@@ -36,6 +56,7 @@ export default function PrivacyPage() {
         <h2>URL downloads</h2>
         <p>The hosted browser application does not download media from YouTube or other platforms. A future desktop edition may offer local yt-dlp imports only for material the user owns or is authorized to download, subject to each service’s terms.</p>
       </section>
-    </main></PageTransition>
+      </main>
+    </PageTransition>
   );
 }
