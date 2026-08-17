@@ -9,13 +9,13 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
 
 export const metadata: Metadata = {
   metadataBase: siteUrl,
-  title: { default: "MusicMixer — Private browser audio toolkit", template: "%s · MusicMixer" },
+  title: { default: "MusicMixer: Private browser audio toolkit", template: "%s · MusicMixer" },
   description: "Convert, trim, split, merge, normalize, and batch-process audio directly in your browser. Your media never leaves your device.",
   applicationName: "MusicMixer",
   keywords: ["audio converter", "browser ffmpeg", "private audio editor", "audio toolkit", "music converter"],
   alternates: { canonical: "/" },
   openGraph: {
-    title: "MusicMixer — Your audio. Your device.",
+    title: "MusicMixer: Your audio. Your device.",
     description: "A private, browser-based audio workflow builder.",
     type: "website",
     url: "/"

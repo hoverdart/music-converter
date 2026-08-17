@@ -317,6 +317,8 @@ button { color: inherit; }
 .chapter-copy p { margin: 0 0 20px; color: #bbb7c3; font-size: 17px; line-height: 1.75; }
 .chapter-copy strong { color: var(--text); }
 .chapter-copy a { color: var(--violet-soft); text-underline-offset: 4px; }
+.chapter-copy h2 a { color: inherit; text-decoration-color: rgba(168,159,255,.38); transition: color var(--motion-fast) ease, text-decoration-color var(--motion-fast) ease; }
+.chapter-copy h2 a:hover { color: var(--violet-soft); text-decoration-color: currentColor; }
 .about-quote { margin: 28px 0; padding: 20px 24px; border-left: 3px solid var(--violet); background: rgba(129,115,255,.07); border-radius: 0 14px 14px 0; color: #ded9e5; font-size: 19px; line-height: 1.55; }
 .then-now { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 26px 0; }
 .then-now article { border: 1px solid var(--line); border-radius: 16px; padding: 18px; background: rgba(255,255,255,.025); transition: border-color var(--motion-fast) ease, background var(--motion-fast) ease, transform var(--motion-fast) var(--ease-out); }

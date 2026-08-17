@@ -34,7 +34,7 @@ export function formatBytes(bytes: number): string {
 }
 
 export function formatDuration(seconds?: number): string {
-  if (!seconds || !Number.isFinite(seconds)) return "—";
+  if (!seconds || !Number.isFinite(seconds)) return "Unknown";
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
   const remainder = Math.floor(seconds % 60);

@@ -66,7 +66,7 @@ export async function loadJobs(): Promise<Job[]> {
   return jobs.reverse().map((job) => {
     const restored = { ...job, recipe: validateRecipe(job.recipe) };
     return ["probing", "running"].includes(restored.status)
-      ? { ...restored, status: "ready" as const, phase: "Interrupted — ready to restart", progress: 0 }
+      ? { ...restored, status: "ready" as const, phase: "Interrupted, ready to restart", progress: 0 }
       : restored;
   });
 }

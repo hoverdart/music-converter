@@ -138,8 +138,10 @@ test("tells the MusicMixer story and links to Shaurya's website", async ({ page 
   await expect(page.getByRole("banner").getByRole("link", { name: /Created by Shaurya/ })).toBeVisible();
   await expect(page.getByRole("heading", { name: "The bot grew up." })).toBeVisible();
   await expect(page.getByRole("heading", { name: "It started with a taco." })).toBeVisible();
+  await expect(page.getByRole("link", { name: "It started with a taco." })).toHaveAttribute("href", "https://www.shauryav.com/blog/tacobot");
   await expect(page.getByRole("heading", { name: "YouTube kept moving the goalposts." })).toBeVisible();
-  await expect(page.getByText(/The bot was free\. Keeping a computer awake for it was not\./)).toBeVisible();
+  await expect(page.getByText(/The website worked, right up until its most important command was no longer allowed\./)).toBeVisible();
+  await expect(page.getByText(/PythonAnywhere eventually blocked the yt-dlp calls/)).toBeVisible();
   await expect(page.getByText(/Early Verified Bot Developer/)).toBeVisible();
   await expect(page.getByAltText("The original MusicMixer Discord bot artwork from 2020")).toBeVisible();
   await expect(page.getByAltText("Preview of Shaurya Verma's personal website")).toBeVisible();
